@@ -58,7 +58,6 @@ print(torch_tensors.shape)
 print(TrueLabelTensor.shape)
 
 
-
 #-----Normalization of Data----------#
 # z-score standardization around axis = 0
 mean_X = torch_tensors.mean()
@@ -71,6 +70,33 @@ normalized_tensor = (torch_tensors - mean_X) / std_X
 normalized_tensor_y = (TrueLabelTensor - mean_Y) / std_y
 
 
+
+
+#----plot data without normalization----#
+
+def plotDataWithoutNormalization(torch_tensors):
+    plt.plot(torch_tensors.view(-1), 'o', markersize=2)
+    plt.title("input Data without normalization")
+    plt.xlabel('X-axis')
+    plt.ylabel('input features')
+    plt.grid()
+    plt.show()
+
+#plotDataWithoutNormalization(torch_tensors)
+
+#----plot data with normalization----#
+
+def plotDataWithNormalization(normalized_tensor):
+    plt.plot(normalized_tensor.view(-1), 'o', markersize=2)
+    plt.title("input Data with normalization")
+    plt.xlabel('X-axis')
+    plt.ylabel('input features')
+    plt.grid()
+    plt.show()
+
+#plotDataWithNormalization(normalized_tensor)
+
+
 #---split data into training (0.8) and testing (0.2) Data
 
 split = int(len(normalized_tensor)*0.8)
@@ -79,6 +105,7 @@ training_Data_Y = normalized_tensor_y[:split]
 
 testing_Data = normalized_tensor[split:]
 testing_Data_Y = normalized_tensor_y[split:]
+
 
 
 #------------Data set--------------#
@@ -129,9 +156,8 @@ def plotLoss(epoch, loss, numEpochs):
     plt.plot(epoch, loss ,label="Loss as a function of epoch")
     plt.xlabel("epoch")
     plt.ylabel("loss")
-    plt.legend(loc='upper left')
-    #plt.ylim(-1, 2)
-    plt.ylim(-5, 5)
+    plt.legend(loc='upper right')
+    #plt.ylim(-2, 3)
     plt.xlim(-1,numEpochs)
     plt.grid()
     plt.show()
